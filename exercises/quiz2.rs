@@ -20,8 +20,6 @@
 //
 // No hints this time!
 
-// I AM NOT DONE
-
 pub enum Command {
     Uppercase,
     Trim,
@@ -31,12 +29,24 @@ pub enum Command {
 mod my_module {
     use super::Command;
 
+    const SUFFIX: &str = "bar";
+
     // TODO: Complete the function signature!
-    pub fn transformer(input: ???) -> ??? {
+    pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
         // TODO: Complete the output declaration!
-        let mut output: ??? = vec![];
+        let mut output: Vec<String> = Vec::with_capacity(input.len());
         for (string, command) in input.iter() {
-            // TODO: Complete the function body. You can do it!
+            output.push(match *command {
+                Command::Uppercase => string.to_uppercase(),
+                Command::Trim => string.trim().to_owned(),
+                Command::Append(n) => {
+                    let mut out = string.to_owned();
+                    for i in 0..n {
+                        out.push_str(SUFFIX);
+                    }
+                    out
+                }
+            })
         }
         output
     }
